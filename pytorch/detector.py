@@ -5,6 +5,8 @@ import torch.nn as nn
 from torch.autograd import Variable
 import numpy as np
 import cv2
+
+from pytorch.utils import load_classes
 from utils import *
 import argparse
 import os
@@ -25,7 +27,7 @@ def arg_parse():
 
     parser.add_argument("--images", dest='images', help=
     "Image / Directory containing images to perform detection upon",
-                        default="images", type=str)
+                        default="../images", type=str)
     parser.add_argument("--det", dest='det', help=
     "Image / Directory to store detections to",
                         default="det", type=str)
@@ -34,10 +36,10 @@ def arg_parse():
     parser.add_argument("--nms_thresh", dest="nms_thresh", help="NMS Threshhold", default=0.4)
     parser.add_argument("--cfg", dest='cfgfile', help=
     "Config file",
-                        default="cfg/yolov3.cfg", type=str)
+                        default="../cfg/yolov3.cfg", type=str)
     parser.add_argument("--weights", dest='weightsfile', help=
     "weightsfile",
-                        default="cfg/yolov3.weights", type=str)
+                        default="../weights/yolov3.weights", type=str)
     parser.add_argument("--reso", dest='reso', help=
     "Input resolution of the network. Increase to increase accuracy. Decrease to increase speed",
                         default="416", type=str)
@@ -54,7 +56,7 @@ start = 0
 CUDA = torch.cuda.is_available()
 
 num_classes = 80
-classes = load_classes("data/coco.names")
+classes = load_classes("../data/coco.names")
 
 # Set up the neural network
 print("Loading network.....")
