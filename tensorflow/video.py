@@ -21,7 +21,7 @@ weights_file = '../weights/yolov3_weights.tf'
 
 
 def main():
-    model = yolov3_net(cfg_file, model_size, num_classes)
+    model = yolov3_net(cfg_file, num_classes)
     model.load_weights(weights_file)
     class_names = load_class_names(class_names_file)
 

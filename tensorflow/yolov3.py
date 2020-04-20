@@ -21,11 +21,10 @@ def parse_cfg(cfg_file):
     return blocks
 
 
-def yolov3_net(cfg_file, model_size, num_classes):
+def yolov3_net(cfg_file, num_classes):
     """
     Build model yolo from config file
     :param cfg_file:
-    :param model_size: input image 416x416
     :param num_classes:
     :return:
     """
@@ -133,5 +132,6 @@ def yolov3_net(cfg_file, model_size, num_classes):
         outputs[i] = inputs
         output_filters.append(filters)
     model = Model(input_image, out_pred)
-    model.summary()
+    # model.summary()
+    print(model.outputs)
     return model

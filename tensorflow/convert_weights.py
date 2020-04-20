@@ -1,6 +1,8 @@
 import numpy as np
 from yolov3 import yolov3_net
 from yolov3 import parse_cfg
+import argparse
+import tensorflow as tf
 
 
 def load_weights(model, cfg_file, weight_file):
@@ -54,17 +56,25 @@ def load_weights(model, cfg_file, weight_file):
 
 
 def main():
-    weight_file = "../weights/yolov3.weights"
-    cfg_file = "../cfg/yolov3.cfg"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default="../cfg/yolov3.cfg")
+    parser.add_argument("--weight", type=str, default="../weights/yolov3.weights")
+    parser.add_argument("--n_classes", type=int, default=80)
+    parser.add_argument("--output", type=str, default="../weights/test/")
 
-    model_size = (416, 416, 3)
-    num_classes = 80
+    args = parser.parse_args()
 
-    model = yolov3_net(cfg_file, model_size, num_classes)
-    load_weights(model, cfg_file, weight_file)
+    # weight_file = "../weights/yolov3.weights"
+    # cfg_file = "../cfg/yolov3.cfg"
+
+    # num_classes = 80
+
+    model = yolov3_net(args.config, args.n_classes)
+    load_weights(model, args.config, args.weight)
 
     try:
-        model.save_weights("../weights/yolov3_weights.tf")
+        # model.save_weights(args.output)
+        tf.saved_model.save(model, args.output)
         print("The file yolov3_weights.tf has been saved successfully.")
     except IOError:
         print("Couldn't write the file yolov3_weights.tf .")

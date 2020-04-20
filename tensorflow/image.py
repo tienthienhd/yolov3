@@ -1,3 +1,5 @@
+import time
+
 import tensorflow as tf
 from utils import load_class_names, output_boxes, draw_output, resize_image
 import cv2
@@ -23,7 +25,7 @@ img_path = '../images/dog-cycle-car.png'
 
 
 def main():
-    model = yolov3_net(cfg_file, model_size, num_classes)
+    model = yolov3_net(cfg_file, num_classes)
     model.load_weights(weights_file)
 
     class_names = load_class_names(class_names_file)
@@ -31,8 +33,9 @@ def main():
     image = cv2.imread(img_path)
     image = tf.expand_dims(image, 0)
     resized_frame = resize_image(image, (model_size[0], model_size[1]))
+    start_time = time.time()
     pred = model.predict(resized_frame, steps=1)
-
+    print("Time inference: ", time.time() - start_time)
     boxes, scores, classes, nums = output_boxes(pred, model_size, max_output_size, max_output_size_per_class,
                                                 iou_threshold, confidence_threshold)
 
