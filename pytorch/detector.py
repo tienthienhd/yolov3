@@ -6,7 +6,7 @@ from torch.autograd import Variable
 import numpy as np
 import cv2
 
-from pytorch.utils import load_classes
+from utils import load_classes
 from utils import *
 import argparse
 import os

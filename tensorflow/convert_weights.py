@@ -73,9 +73,9 @@ def main():
     load_weights(model, args.config, args.weight)
 
     try:
-        # model.save_weights(args.output)
-        tf.saved_model.save(model, args.output)
-        print("The file yolov3_weights.tf has been saved successfully.")
+        model.save_weights(args.output)
+        # tf.saved_model.save(model, args.output)
+        print("The file yolov3_weights. tf has been saved successfully.")
     except IOError:
         print("Couldn't write the file yolov3_weights.tf .")
 

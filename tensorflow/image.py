@@ -22,6 +22,8 @@ cfg_file = '../cfg/yolov3.cfg'
 weights_file = '../weights/yolov3_weights.tf'
 
 img_path = '../images/dog-cycle-car.png'
+# img_path = '/home/thiennt/Desktop/selfie_2020-03-02_10-39-41_crop.jpg'
+# img_path = '/home/thiennt/Desktop/t.jpeg'
 
 
 def main():
@@ -42,10 +44,12 @@ def main():
     image = np.squeeze(image)
     img = draw_output(image, boxes, scores, classes, nums, class_names)
 
+    img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
     win_name = "Image detection"
     cv2.imshow(win_name, img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
 
 if __name__ == '__main__':
     main()
